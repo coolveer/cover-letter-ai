@@ -45,7 +45,7 @@ export default async function handler(req, res) {
         const dataBuffer = fs.readFileSync(pdfFile[0].filepath);
         const data = await pdf(dataBuffer);
         fs.unlinkSync(pdfFile[0].filepath);
-
+        fs.rmSync(uploadDir, { recursive: true, force: true });
         res.status(200).json({ text: data.text });
     } catch (error) {
         console.error('Error extracting text from PDF:', error);
